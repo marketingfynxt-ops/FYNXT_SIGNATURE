@@ -15,7 +15,19 @@ ol{font-size:14px;line-height:1.6;padding-left:20px;margin:6px 0}
 <div class="card"><div class="fields">
 <div><label>Name<input id="f_name" value="Sarah Paul"></label></div>
 <div><label>Job title<input id="f_title" value="Head of Human Resources &amp; Operations"></label></div>
-<div><label>Phone<input id="f_phone" value="+65 8113 9278"></label></div>
+<div><label>Country code<select id="f_cc" style="width:100%;box-sizing:border-box;padding:7px 9px;border:1px solid #ccd3d9;border-radius:6px;font-size:14px;margin-top:3px;background:#fff">
+<option value="+65">Singapore (+65)</option>
+<option value="+971">UAE (+971)</option>
+<option value="+91">India (+91)</option>
+<option value="+1">USA / Canada (+1)</option>
+<option value="+44">United Kingdom (+44)</option>
+<option value="+60">Malaysia (+60)</option>
+<option value="+852">Hong Kong (+852)</option>
+<option value="+61">Australia (+61)</option>
+<option value="+357">Cyprus (+357)</option>
+<option value="+27">South Africa (+27)</option>
+</select></label></div>
+<div><label>Phone number<input id="f_phone" value="81139278" placeholder="e.g. 9876543210" inputmode="numeric"></label></div>
 <div><label>Email<input id="f_email" value="sarah.paul@fynxt.com"></label></div>
 <div><label>Office location<select id="f_loc" style="width:100%;box-sizing:border-box;padding:7px 9px;border:1px solid #ccd3d9;border-radius:6px;font-size:14px;margin-top:3px;background:#fff">
 <option value="sg">Singapore (Headquarters)</option>
@@ -31,8 +43,7 @@ ol{font-size:14px;line-height:1.6;padding-left:20px;margin:6px 0}
  <tr>
   <td valign="middle" width="292" style="width:264px;padding:0 12px 0 16px;border-right:1px solid #8A949D;">
    <div id="s_name" style="font-family:'Poppins','Segoe UI',Arial,Helvetica,sans-serif;font-size:24px;line-height:30px;font-weight:bold;color:#0F1720;">Sarah Paul</div>
-   <div id="s_title" style="font-family:'Poppins','Segoe UI',Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;color:#00B2B7;padding-top:4px;white-space:nowrap;">Head of Human Resources &amp; Operations</div>
-   <div style="font-family:'Poppins','Segoe UI',Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#26303A;padding-top:5px;">FYNXT&nbsp;&nbsp;|&nbsp;&nbsp;TECH4JC Pte Ltd</div>
+   <div id="s_title" style="font-family:'Poppins','Segoe UI',Arial,Helvetica,sans-serif;font-size:15px;line-height:21px;color:#00B2B7;padding-top:6px;">Head of Human Resources &amp; Operations</div>
   </td>
   <td valign="middle" width="388" style="width:372px;padding:0 0 0 16px;">
    <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
@@ -71,16 +82,17 @@ document.querySelectorAll('#sig img').forEach(i=>i.setAttribute('src',new URL(i.
 if(location.protocol==='file:'){const w=document.createElement('p');w.style.cssText='background:#fff4e5;border:1px solid #f0c27b;padding:10px 12px;border-radius:6px;font-size:14px;margin:0 0 14px';w.innerHTML='<b>Opened from your computer:</b> images will only work in Outlook after this page is deployed online (e.g. on Vercel). Copy the signature from the live link.';document.querySelector('.wrap').insertBefore(w,document.querySelector('.card'));}
 function upd(){
  $('s_name').textContent=$('f_name').value; $('s_title').textContent=$('f_title').value;
- const p=$('f_phone').value; $('s_phone').textContent=p; $('s_phone').href='tel:'+p.replace(/[^+\d]/g,'');
+ const d=$('f_phone').value.replace(/\D/g,''), h=Math.ceil(d.length/2), cc=$('f_cc').value; const p=cc+' '+(d.length>5?d.slice(0,h)+' '+d.slice(h):d); $('s_phone').textContent=p; $('s_phone').href='tel:'+cc+d;
  const e=$('f_email').value; $('s_email').textContent=e; $('s_email').href='mailto:'+e;
 }
-['f_name','f_title','f_phone','f_email'].forEach(i=>$(i).addEventListener('input',upd));
+['f_name','f_title','f_phone','f_email'].forEach(i=>$(i).addEventListener('input',upd)); $('f_cc').addEventListener('change',upd);
 const ADDR={
  sg:'MBFC Tower 2, #39-42, 10 Marina Boulevard,<br>Singapore 018983',
  dxb:'AlNoor Alwadeh Business Center, 3101 The Prime Tower,<br>Business Bay, Dubai 112037, UAE',
  srt:'1008-1009, Tower A, Swastik Universal Building,<br>Dumas Rd, New Magdalla, Surat, Gujarat 395007',
  chn:'TIDCO Fintech City, C9 Floor, Mount Poonamallee Rd,<br>Nandambakkam, Greater Chennai, Tamil Nadu 600089'};
-$('f_loc').addEventListener('change',()=>{$('s_addr').innerHTML=ADDR[$('f_loc').value];});
+const LOCCC={sg:'+65',dxb:'+971',srt:'+91',chn:'+91'};
+$('f_loc').addEventListener('change',()=>{$('s_addr').innerHTML=ADDR[$('f_loc').value]; $('f_cc').value=LOCCC[$('f_loc').value]; upd();});
 $('copy').onclick=async()=>{
  const node=$('sig'); let ok=false;
  try{ if(navigator.clipboard&&window.ClipboardItem){
