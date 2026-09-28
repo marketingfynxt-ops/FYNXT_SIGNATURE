@@ -268,12 +268,6 @@ ol{font-size:14px;line-height:1.6;padding-left:20px;margin:6px 0}
 </select></label></div>
 <div><label>Phone number<input id="f_phone" value="81139 278" placeholder="e.g. 63783 56518" inputmode="numeric" maxlength="16"></label></div>
 <div><label>Email<input id="f_email" value="sarah.paul@fynxt.com"></label></div>
-<div><label>Office location<select id="f_loc" style="width:100%;box-sizing:border-box;padding:7px 9px;border:1px solid #ccd3d9;border-radius:6px;font-size:14px;margin-top:3px;background:#fff">
-<option value="sg">Singapore (Headquarters)</option>
-<option value="dxb">Dubai, UAE</option>
-<option value="srt">Surat, India</option>
-<option value="chn">Chennai, India</option>
-</select></label></div>
 </div></div>
 <div class="card" style="margin-bottom:12px"><div id="sig">
 <table cellpadding="0" cellspacing="0" border="0" width="680" style="width:680px;border-collapse:collapse;font-family:'Poppins','Segoe UI',Arial,Helvetica,sans-serif;background:#ffffff;">
@@ -292,8 +286,6 @@ ol{font-size:14px;line-height:1.6;padding-left:20px;margin:6px 0}
         <td valign="middle" style="font-family:'Poppins','Segoe UI',Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;padding:3px 0;"><a id="s_email" href="mailto:sarah.paul@fynxt.com" style="color:#26303A;text-decoration:none;">sarah.paul@fynxt.com</a></td></tr>
     <tr><td width="26" valign="middle" style="width:26px;padding:3px 0;"><img src="assets/web.png" width="16" height="16" alt="Website" style="display:block;border:0;width:16px;height:16px;"></td>
         <td valign="middle" style="font-family:'Poppins','Segoe UI',Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;padding:3px 0;"><a href="https://www.fynxt.com" style="color:#26303A;text-decoration:underline;">www.fynxt.com</a></td></tr>
-    <tr><td width="26" valign="top" style="width:26px;padding:4px 0 3px 0;"><img src="assets/location.png" width="16" height="16" alt="Address" style="display:block;border:0;width:16px;height:16px;"></td>
-        <td valign="middle" style="font-family:'Poppins','Segoe UI',Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;padding:3px 0;color:#26303A;" id="s_addr" nowrap>MBFC Tower 2, #39-42, 10 Marina Boulevard,<br>Singapore 018983</td></tr>
    </table>
   </td>
  </tr></table>
@@ -325,13 +317,6 @@ function upd(){
  const e=$('f_email').value; $('s_email').textContent=e; $('s_email').href='mailto:'+e;
 }
 ['f_name','f_title','f_phone','f_email'].forEach(i=>$(i).addEventListener('input',upd)); $('f_cc').addEventListener('change',upd); upd();
-const ADDR={
- sg:'MBFC Tower 2, #39-42, 10 Marina Boulevard,<br>Singapore 018983',
- dxb:'AlNoor Alwadeh Business Center, 3101 The Prime Tower,<br>Business Bay, Dubai 112037, UAE',
- srt:'1008-1009, Tower A, Swastik Universal Building,<br>Dumas Rd, New Magdalla, Surat, Gujarat 395007',
- chn:'TIDCO Fintech City, C9 Floor, Mount Poonamallee Rd,<br>Nandambakkam, Greater Chennai, Tamil Nadu 600089'};
-const LOCCC={sg:'+65',dxb:'+971',srt:'+91',chn:'+91'};
-$('f_loc').addEventListener('change',()=>{$('s_addr').innerHTML=ADDR[$('f_loc').value]; $('f_cc').value=LOCCC[$('f_loc').value]; upd();});
 $('copy').onclick=async()=>{
  const node=$('sig'); let ok=false;
  try{ if(navigator.clipboard&&window.ClipboardItem){
